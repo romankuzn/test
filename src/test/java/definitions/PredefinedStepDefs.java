@@ -75,7 +75,7 @@ public class PredefinedStepDefs {
     @Then("^element with xpath \"([^\"]*)\" should be enabled$")
     public void elementWithXpathShouldBeEnabled(String xpath) {
         assertThat(getDriver().findElement(By.xpath(xpath)).isEnabled()).isTrue();
-        assertThat(getDriver().findElement(By.xpath("//h4[contains(text(),'Your request is confirmed')]")).isDisplayed()).isTrue();
+        assertThat(getDriver().findElement(By.xpath(xpath)).isDisplayed()).isTrue();
     }
 
     @Then("^element with xpath \"([^\"]*)\" should be disabled")
