@@ -68,3 +68,75 @@
       And element with xpath "//label[@id='confirmPassword-error']" should be displayed
       And element with xpath "//label[@id='confirmPassword-error']" should contain text "Please enter at least 5 characters."
 
+    @sammple5
+    Scenario: Popup dialog appears clicking inside of Name field. Name concatenation verification
+      Given I open url "https://skryabin.com/webdriver/html/sample.html"
+      Then element with xpath "//*[@aria-labelledby='ui-id-1']" should not be displayed
+      When I click on element with xpath "//input[@id='name']"
+      Then element with xpath "//*[@aria-labelledby='ui-id-1']" should be displayed
+      When I type "Andrey" into element with xpath "//input[@id='firstName']"
+      And I type "Sergeevich" into element with xpath "//input[@id='middleName']"
+      And I type "Shevchenko" into element with xpath "//input[@id='lastName']"
+      And I click on element with xpath "//span[contains(text(),'Save')]/../../button[1]"
+      Then element with xpath "//input[@id='name']" should have attribute "value" as "Andrey Sergeevich Shevchenko"
+
+    @sample6
+    Scenario: Validate that Accepting Privacy Policy is required to submit the form, then check the field
+      Given I open url "https://skryabin.com/webdriver/html/sample.html"
+      Then element with xpath "//label[@id='agreedToPrivacyPolicy-error']" should not be present
+      When I click on element with xpath "//button[@id='formSubmit']"
+      Then element with xpath "//label[@id='agreedToPrivacyPolicy-error']" should be present
+      When I click on element with xpath "//input[@name='agreedToPrivacyPolicy']"
+      And I click on element with xpath "//button[@id='formSubmit']"
+      Then element with xpath "//label[@id='agreedToPrivacyPolicy-error']" should not be displayed
+
+      @sample7
+      Scenario: entering non-required fields
+        Given I open url "https://skryabin.com/webdriver/html/sample.html"
+        And I type "5556561024" into element with xpath "//input[@name='phone']"
+        And I select value "Ukraine" from list with xpath "//select[@name='countryOfOrigin']"
+        And I click on element with xpath "//input[@name='gender' and @value='male']"
+        And I click on element with xpath "//input[@name='allowedToContact']"
+        And I type "154 New Year Road, New York, NY 01002" into element with xpath "//textarea[@id='address']"
+        And I select value "BMW" from list with xpath "//select[@name='carMake']"
+        And I click on element with xpath "//button[@id='thirdPartyButton']"
+        And I accept alert
+        And I type "12/22/2018" into element with xpath "//input[@id='dateOfBirth']"
+        Then I wait for 3 sec
+
+        @sample8
+        Scenario: fill and submit form and verify information
+          Given I open url "https://skryabin.com/webdriver/html/sample.html"
+          And I type "test_user" into element with xpath "//input[@name='username']"
+          And I type "simple@example.com" into element with xpath "//input[@name='email']"
+          And I type "passw0rd" into element with xpath "//input[@id='password']"
+          And I type "passw0rd" into element with xpath "//input[@id='confirmPassword']"
+          And I click on element with xpath "//input[@id='name']"
+          Then element with xpath "//*[@aria-labelledby='ui-id-1']" should be displayed
+          When I type "Andrey" into element with xpath "//input[@id='firstName']"
+          And I type "Sergeevich" into element with xpath "//input[@id='middleName']"
+          And I type "Shevchenko" into element with xpath "//input[@id='lastName']"
+          And I click on element with xpath "//span[contains(text(),'Save')]/../../button[1]"
+          And I click on element with xpath "//input[@name='agreedToPrivacyPolicy']"
+          And I type "5556561024" into element with xpath "//input[@name='phone']"
+          And I select value "Ukraine" from list with xpath "//select[@name='countryOfOrigin']"
+          And I click on element with xpath "//input[@name='gender' and @value='male']"
+          And I click on element with xpath "//input[@name='allowedToContact']"
+          And I type "154 New Year Road, New York, NY 01002" into element with xpath "//textarea[@id='address']"
+          And I select value "BMW" from list with xpath "//select[@name='carMake']"
+          And I click on element with xpath "//button[@id='thirdPartyButton']"
+          And I accept alert
+          And I type "12/22/2018" into element with xpath "//input[@id='dateOfBirth']"
+          And I click on element with xpath "//button[@id='formSubmit']"
+          Then element with xpath "//*[@name='username']" should have text as "test_user"
+          And element with xpath "//*[@name='email']" should have text as "simple@example.com"
+          And element with xpath "//*[@name='password']" should have text as "[entered]"
+          And element with xpath "//*[@name='name']" should have text as "Andrey Sergeevich Shevchenko"
+          And element with xpath "//*[@name='phone']" should have text as "5556561024"
+          And element with xpath "//*[@name='countryOfOrigin']" should have text as "Ukraine"
+          And element with xpath "//*[@name='address']" should have text as "154 New Year Road, New York, NY 01002"
+          And element with xpath "//*[@name='carMake']" should have text as "BMW"
+          And element with xpath "//*[@name='dateOfBirth']" should have text as "12/22/2018"
+          And I wait for 10 sec
+
+

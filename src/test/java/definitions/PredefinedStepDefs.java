@@ -1,6 +1,7 @@
 // Created by Viacheslav (Slava) Skryabin 04/01/2018
 package definitions;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,6 +12,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Select;
 import java.io.File;
 import java.util.Date;
 import java.util.Iterator;
@@ -224,5 +226,13 @@ public class PredefinedStepDefs {
     @When("^I mouse over element with xpath \"([^\"]*)\"$")
     public void iMouseOverElementWithXpath(String xpath) {
         new Actions(getDriver()).moveToElement(getDriver().findElement(By.xpath(xpath))).perform();
+    }
+
+    @When("^I select value \"([^\"]*)\" from list with xpath \"([^\"]*)\"$")
+    public void iSelectValueFromListWithXpath(String value, String xpath) throws InterruptedException {
+        // Write code here that turns the phrase above into concrete actions
+        Thread.sleep(2000);
+        Select dropdown = new Select(getDriver().findElement(By.xpath(xpath)));
+        dropdown.selectByVisibleText(value);
     }
 }
